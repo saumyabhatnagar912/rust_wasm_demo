@@ -10,8 +10,8 @@ Then set rust default channel to nightly
 
     rustup default nightly
   
-# Add Wasm32-unknown-unknown
-We need to add 'wasm32-unknown-unknown' library to the rust target.
+# Install wasm target
+We need to add wasm target so that we can compile it later.
 
     rustup target add wasm32-unknown-unknown
   
@@ -24,15 +24,14 @@ we need to install the wasm-bindgen command line tool.
 
     cargo +nightly new <project_name> --lib
 
-# Build for webassembly
-We need to target the wasm32-unknown-unknown compiler to build the .wasm file. The file will be created 
+# Build Project
+We need to use the wasm target to build the .wasm file. The file will be created 
 inside "target/wasm32-unknown-unknown/debug" and will be named same as the project name.
 
      cargo +nightly build --target wasm32-unnknown-unknown
      
 # Apply wasm-bindgen
-The wasm file created is big and unable to read. So we need to apply wasm-bindgen to the wasm file.
-This will give us a much more managed and readable js file that we can use. 
+The wasm file created is large in size and unoptimized. Now that we've generated the wasm module it's time to run the bindgen tool. This tool will postprocess the wasm file, generating a new wasm file and a set of JS bindings as well. This will give us a much more managed and readable js file that we can use. 
 
     wasm-bindgen target/wasm32-unknown-unknown/debug/<wasmfilename>.wasm --out-dir .
 
